@@ -1,26 +1,28 @@
 const request = require('supertest');
 
-const app = require('../src/app');
+const app = require('../src/api');
 
 describe('GET /api/v1', () => {
-  it('responds with a json message', (done) => {
+  const isValidErrorMessage = (res) => res.body.message === '🔍 - Not Found - /api/v1/';
+
+  it('responds with a 404', (done) => {
     request(app)
       .get('/api/v1')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, {
-        message: 'API - 👋🌎🌍🌏'
-      }, done);
+      .expect(404)
+      .expect(isValidErrorMessage)
+      .end(done);
   });
 });
 
-describe('GET /api/v1/emojis', () => {
+describe('GET /api/v1/users', () => {
   it('responds with a json message', (done) => {
     request(app)
-      .get('/api/v1/emojis')
+      .get('/api/v1/users')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, ['😀', '😳', '🙄'], done);
+      .expect(200, ['Tom', 'Dick', 'Harry'], done);
   });
 });
 
