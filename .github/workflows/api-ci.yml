@@ -35,6 +35,7 @@ jobs:
         run: npm ci
       
       - name: Contextualize environment
+        uses: canastro/copy-file-action@master
         with:
           source: "qna-api/.env.ci"
           target: "qna-api/.env"
