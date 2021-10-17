@@ -21,7 +21,7 @@ mongoose.connect(dbURL, {
   .catch((err) => {
     // eslint-disable-next-line no-console
     console.error('Failed to connect to MongoDB...', err);
-    process.exit();
+    process.exit(3);
   });
 
 app.use(morgan('dev'));
