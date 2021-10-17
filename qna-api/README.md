@@ -1,4 +1,4 @@
-# Express API Starter
+# QnA API
 
 Includes API Server utilities:
 
