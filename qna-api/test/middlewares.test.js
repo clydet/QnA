@@ -1,4 +1,4 @@
-const assert = require('assert');
+const { expect } = require('chai');
 const middle = require('../src/middlewares');
 
 describe('Internal server error', () => {
@@ -8,6 +8,6 @@ describe('Internal server error', () => {
     const response = { statusCode: 200, status: statusAssignment, json: () => {} };
     middle.errorHandler({ stack: 'stack' }, {}, response, null);
 
-    assert.strictEqual(testStatus, 500);
+    expect(testStatus).to.equal(500);
   });
 });

@@ -1,4 +1,5 @@
 const request = require('supertest');
+const { expect } = require('chai');
 
 const app = require('../src/api');
 
@@ -17,12 +18,19 @@ describe('GET /api/v1', () => {
 });
 
 describe('GET /api/v1/users', () => {
+  const isValidResponse = (res) => {
+    const firstNames = res.body.map((user) => user.firstName);
+    expect(firstNames).to.have.members(['Bub', 'Jim']);
+  };
+
   it('responds with a json message', (done) => {
     request(app)
       .get('/api/v1/users')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, ['Tom', 'Dick', 'Harry'], done);
+      .expect(200)
+      .expect(isValidResponse)
+      .end(done);
   });
 });
 
