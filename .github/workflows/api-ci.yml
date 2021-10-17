@@ -34,6 +34,11 @@ jobs:
         working-directory: ./qna-api
         run: npm ci
       
+      - name: Contextualize environment
+        with:
+          source: "qna-api/.env.ci"
+          target: "qna-api/.env"
+
       - name: Run api
         working-directory: ./qna-api
         run: npm test
