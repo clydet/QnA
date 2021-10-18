@@ -50,3 +50,5 @@ npm run dev
 ```
 mongod --config /usr/local/etc/mongod.conf
 ```
+
+[Entity relationships](./src/models/ENTITY_RELATIONSHIPS.md)
