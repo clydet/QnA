@@ -43,3 +43,10 @@ npm run test
 ```
 npm run dev
 ```
+
+## Install and Run MongoDB
+[Install MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+
+```
+mongod --config /usr/local/etc/mongod.conf
+```

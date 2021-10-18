@@ -1,4 +1,5 @@
 const request = require('supertest');
+const { expect } = require('chai');
 
 const app = require('../src/api');
 
@@ -13,16 +14,6 @@ describe('GET /api/v1', () => {
       .expect(404)
       .expect(isValidErrorMessage)
       .end(done);
-  });
-});
-
-describe('GET /api/v1/users', () => {
-  it('responds with a json message', (done) => {
-    request(app)
-      .get('/api/v1/users')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, ['Tom', 'Dick', 'Harry'], done);
   });
 });
 
