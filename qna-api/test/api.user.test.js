@@ -5,17 +5,17 @@ const app = require('../src/api');
 
 describe('GET /api/v1/users/', () => {
   beforeEach(async () => {
-    await User.deleteMany({});
+    await User.insertUser({ firstName: 'Bub', lastName: 'Bubson', email: 'bbub@gmail.com' });
+    await User.insertUser({ firstName: 'Jim', lastName: 'Jimson', email: 'jjim@gmail.com' });
+  });
+
+  afterEach(async () => {
+    await User.deleteUsers();
   });
 
   it('should return all users', (done) => {
-    const users = [
-      { firstName: 'Bub', lastName: 'Bubson', email: 'bbub@gmail.com' },
-      { firstName: 'Jim', lastName: 'Jimson', email: 'jjim@gmail.com' }
-    ];
-    User.insertMany(users);
     const isValidResponse = (res) => {
-      const firstNames = res.body.map((user) => user.firstName);
+      const firstNames = res.body.rows.map((user) => user.firstName);
       expect(firstNames).to.have.members(['Bub', 'Jim']);
     };
 

@@ -14,7 +14,6 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x, 15.x]
-        mongodb-version: [5.0]
 
     steps:
       - name: Git checkout
@@ -25,12 +24,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       
-      - name: Start MongoDB v${{ matrix.mongodb-version }}
-        uses: supercharge/mongodb-github-action@1.2.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
-          mongodb-port: 27017
-      
       - name: Install dependencies
         working-directory: ./qna-api
         run: npm ci
@@ -40,6 +33,10 @@ jobs:
         with:
           source: "qna-api/.env.ci"
           target: "qna-api/.env"
+      
+      - name: Start database
+        working-directory: ./qna-api
+        run: npm run db-start
 
       - name: Run api
         working-directory: ./qna-api

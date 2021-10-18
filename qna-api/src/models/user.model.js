@@ -1,25 +1,22 @@
-const mongoose = require('mongoose');
+const pool = require('./connection.pool');
 
-const userSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxLength: 50
-  },
-  lastName: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxLength: 50
-  },
-  email: {
-    type: String,
-    required: true,
-    minlength: 5,
-    maxLength: 255,
-    unique: true
-  }
-});
+const getAllUsers = () => {
+  const query = 'SELECT * FROM users;';
+  return pool.query(query, []);
+};
 
-module.exports.User = mongoose.model('User', userSchema);
+const insertUser = async (user) => {
+  const query = 'INSERT INTO users ("firstName", "lastName", "email") VALUES ($1, $2, $3);';
+  await pool.query(query, [user.firstName, user.lastName, user.email]);
+};
+
+const deleteUsers = async () => {
+  const query = 'DELETE FROM users;';
+  await pool.query(query, []);
+};
+
+module.exports.User = {
+  getAllUsers,
+  insertUser,
+  deleteUsers
+};
