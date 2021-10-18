@@ -5,7 +5,7 @@ const app = require('../src/api');
 
 describe('GET /api/v1/users/', () => {
   beforeEach(async () => {
-    await User.deleteMany({});
+    await User.deleteUsers();
   });
 
   it('should return all users', (done) => {
@@ -13,9 +13,9 @@ describe('GET /api/v1/users/', () => {
       { firstName: 'Bub', lastName: 'Bubson', email: 'bbub@gmail.com' },
       { firstName: 'Jim', lastName: 'Jimson', email: 'jjim@gmail.com' }
     ];
-    User.insertMany(users);
+    User.insertUsers(users);
     const isValidResponse = (res) => {
-      const firstNames = res.body.map((user) => user.firstName);
+      const firstNames = res.body.rows.map((user) => user.firstName);
       expect(firstNames).to.have.members(['Bub', 'Jim']);
     };
 
