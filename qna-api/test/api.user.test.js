@@ -8,15 +8,23 @@ describe('GET /api/v1/users/', () => {
     await User.deleteMany({});
   });
 
-  it('should return all users', async () => {
+  it('should return all users', (done) => {
     const users = [
       { firstName: 'Bub', lastName: 'Bubson', email: 'bbub@gmail.com' },
       { firstName: 'Jim', lastName: 'Jimson', email: 'jjim@gmail.com' }
     ];
-    await User.insertMany(users);
-    const response = await request(app).get('/api/v1/users/');
+    User.insertMany(users);
+    const isValidResponse = (res) => {
+      const firstNames = res.body.map((user) => user.firstName);
+      expect(firstNames).to.have.members(['Bub', 'Jim']);
+    };
 
-    expect(response.status).to.equal(200);
-    expect(response.body.length).to.equal(2);
+    request(app)
+      .get('/api/v1/users')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .expect(isValidResponse)
+      .end(done);
   });
 });
