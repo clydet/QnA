@@ -5,11 +5,9 @@ const getAllUsers = () => {
   return pool.query(query, []);
 };
 
-const insertUsers = async (users) => {
+const insertUser = async (user) => {
   const query = 'INSERT INTO users ("firstName", "lastName", "email") VALUES ($1, $2, $3);';
-  await users.forEach(async (user) => {
-    await pool.query(query, [user.firstName, user.lastName, user.email]);
-  });
+  await pool.query(query, [user.firstName, user.lastName, user.email]);
 };
 
 const deleteUsers = async () => {
@@ -19,6 +17,6 @@ const deleteUsers = async () => {
 
 module.exports.User = {
   getAllUsers,
-  insertUsers,
+  insertUser,
   deleteUsers
 };
